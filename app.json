@@ -1,0 +1,72 @@
+{
+  "id": "photocraft",
+  "name": "PhotoCraft",
+  "tagline": "Photoshop-style raster image editor",
+  "upstream": "storytold/photocraft",
+  "port": 7878,
+  "docsPort": 7878,
+  "launch": {
+    "args": [
+      "--control",
+      "{port}",
+      "--control-token-file",
+      "{home}/.photocraft-control.token",
+      "--automation-read-root",
+      "{pictures}",
+      "--automation-write-root",
+      "{pictures}"
+    ]
+  },
+  "mcp": {
+    "server": "photocraft",
+    "live": [
+      "mcp",
+      "--bridge",
+      "127.0.0.1:{port}",
+      "--control-token-file",
+      "{home}/.photocraft-control.token"
+    ],
+    "headless": [
+      "mcp",
+      "--automation-read-root",
+      "{pictures}",
+      "--automation-write-root",
+      "{pictures}"
+    ],
+    "default": "live"
+  },
+  "windows": {
+    "dirs": [
+      "{ProgramFiles}\\PhotoCraft",
+      "{LocalAppData}\\Programs\\PhotoCraft"
+    ],
+    "app": "photocraft.exe",
+    "cli": "photocraft-cli.exe"
+  },
+  "macos": {
+    "bundles": [
+      "/Applications/PhotoCraft.app",
+      "{home}/Applications/PhotoCraft.app"
+    ],
+    "appBinary": "Contents/MacOS/PhotoCraft",
+    "cliPaths": [
+      "{home}/.artcraft/bin/photocraft-cli",
+      "/usr/local/bin/photocraft-cli",
+      "/opt/homebrew/bin/photocraft-cli",
+      "{bundle}/Contents/MacOS/photocraft-cli"
+    ],
+    "cliReleaseAsset": "photocraft-cli-{version}-macos-universal.zip",
+    "cliBinaryInZip": "photocraft-cli"
+  },
+  "prepare": {
+    "dirs": []
+  },
+  "auth": {
+    "type": "token-file",
+    "notes": "256-bit token in {home}/.photocraft-control.token (created by the app). File access is limited to the Pictures folder by the automation roots."
+  },
+  "verified": {
+    "windows": true,
+    "macos": false
+  }
+}
